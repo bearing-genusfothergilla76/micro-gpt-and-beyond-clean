@@ -1,0 +1,8 @@
+graph TD
+    A[Same transformer]
+    A --> B[PyTorch<br/>nn.Module<br/>backward]
+    B --> C[Batching<br/>reshape + mask]
+    C --> D[JAX<br/>pure fn<br/>grad + jit]
+    D --> E[Batching<br/>vmap]
+    E --> F[MLX<br/>lazy eval<br/>unified memory]
+    F --> G[Batching<br/>reshape on Apple GPU]

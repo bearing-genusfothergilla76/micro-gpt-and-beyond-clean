@@ -1,0 +1,542 @@
+{
+  "16": {
+    "text": "This is the first framework jump where a huge amount of manual work disappears. The architecture stays recognizable; PyTorch absorbs the gradient bookkeeping.",
+    "hash": "b67c9dde"
+  },
+  "17": {
+    "text": "Same dataset, same training problem. That keeps the lesson focused on what PyTorch changes rather than on what the model is asked to learn.",
+    "hash": "de2abade"
+  },
+  "18": {
+    "text": "The outer training loop still looks familiar. The dramatic difference is not in data loading, but in how much machinery the framework now hides for us.",
+    "hash": "7e18ed42"
+  },
+  "20": {
+    "text": "PyTorch is the first place where the code starts looking like modern deep learning practice: tensors, autograd, modules, and the option of GPU acceleration all arrive together.",
+    "hash": "cf1070d3"
+  },
+  "21": {
+    "text": "Instead of manually juggling parameter arrays, we now assemble the model from objects that already know how to register, move, and update their own weights.",
+    "hash": "b802910c"
+  },
+  "22": {
+    "text": "The important contrast with the previous lab is that the math stays the same while the amount of code we have to write around it drops sharply.",
+    "hash": "5af419e1"
+  },
+  "24": {
+    "text": "Reproducibility still matters because we want the framework change to feel like a cleaner expression of the same model, not a different experiment.",
+    "hash": "f0726c6e"
+  },
+  "25": {
+    "text": "PyTorch gets its own seed because the framework now owns initialization and tensor randomness, not just Python's outer loop.",
+    "hash": "7e7dcf46"
+  },
+  "30": {
+    "text": "Same dataset path, all labs share the data directory.",
+    "hash": "5ac9686d"
+  },
+  "31": {
+    "text": "Auto-download the names dataset if needed.",
+    "hash": "9667c968"
+  },
+  "34": {
+    "text": "Fetch the dataset from Karpathy's repo.",
+    "hash": "5e579f27"
+  },
+  "37": {
+    "text": "Same preprocessing as labs 01-02.",
+    "hash": "2f367d0b"
+  },
+  "38": {
+    "text": "Shuffle for random training order.",
+    "hash": "c8f1cb86"
+  },
+  "40": {
+    "text": "Extract all unique characters from the dataset and sort them to form a stable vocabulary. Each character becomes a token with a fixed integer ID.",
+    "hash": "5f7ca3bb"
+  },
+  "41": {
+    "text": "BOS token gets the highest ID.",
+    "hash": "476ca504"
+  },
+  "42": {
+    "text": "27 tokens: 26 letters + BOS.",
+    "hash": "0a38d2ba"
+  },
+  "48": {
+    "text": "Same hyperparameters as labs 01-02, this lab changes the framework, not the architecture.",
+    "hash": "f6d4f4da"
+  },
+  "49": {
+    "text": "4 heads, each attending to different relationships.",
+    "hash": "e804f3b9"
+  },
+  "50": {
+    "text": "A single transformer layer. Real GPTs stack 12 to 96+ layers deep, but one already captures meaningful character-level patterns.",
+    "hash": "cbfe55b3"
+  },
+  "51": {
+    "text": "Names longer than 16 characters get truncated. Most names fit easily within this window.",
+    "hash": "ecfd6b0a"
+  },
+  "52": {
+    "text": "Each of the 4 heads gets 4 dimensions of the 16-dimensional embedding, letting it focus on its own subspace of relationships.",
+    "hash": "77ba194a"
+  },
+  "55": {
+    "text": "RMSNorm as an <code>nn.Module</code>, PyTorch's standard way to define reusable layers. Compare to lab 01's bare function.",
+    "hash": "69fade3d"
+  },
+  "56": {
+    "text": "Constructor takes dimension (unused here since we have no learnable scale) and epsilon.",
+    "hash": "d1f0a37b"
+  },
+  "58": {
+    "text": "A tiny constant added before division to prevent numerical explosion when the input is near zero. Standard practice in every normalization layer.",
+    "hash": "7cedf2b6"
+  },
+  "60": {
+    "text": "The forward method is what gets called when you use the module. Same math as lab 01, but on tensors.",
+    "hash": "a87869a2"
+  },
+  "61": {
+    "text": "One line: compute RMS and scale. <code>rsqrt</code> is reciprocal square root, fused for speed.",
+    "hash": "53678ba7"
+  },
+  "64": {
+    "text": "Self-attention as a module. Four weight matrices, all managed by PyTorch.",
+    "hash": "c20aaac2"
+  },
+  "67": {
+    "text": "<code>nn.Linear</code> wraps a weight matrix with proper initialization, gradient tracking, and GPU support. No bias, matching our architecture.",
+    "hash": "433b771f"
+  },
+  "68": {
+    "text": "Key projection, same as lab 01's <code>attn_wk</code>, but PyTorch tracks gradients automatically.",
+    "hash": "bf2475c8"
+  },
+  "69": {
+    "text": "Project the input into value vectors that carry the actual content to be aggregated by attention.",
+    "hash": "d1a077cb"
+  },
+  "70": {
+    "text": "Project the concatenated multi-head output back into the embedding space.",
+    "hash": "887b9875"
+  },
+  "72": {
+    "text": "Forward pass for attention. Notice: no cache management, no manual gradient logic. Just the math.",
+    "hash": "a87869a2"
+  },
+  "73": {
+    "text": "Unpack batch, sequence length, and channel dimensions. The <code>B</code> dimension is new, even though we train on one example, PyTorch expects batch format.",
+    "hash": "4584ac61"
+  },
+  "74": {
+    "text": "Project to Q, reshape into heads, and transpose so heads are a batch dimension. Same reshape as lab 02 but with PyTorch tensor ops.",
+    "hash": "cc0e8aa9",
+    "diagram": "transformer_attn",
+    "highlight": [
+      "Q"
+    ]
+  },
+  "75": {
+    "text": "Project into key vectors and reshape into separate attention heads. Keys advertise what each token contains so queries can find relevant matches.",
+    "hash": "a48e9c7a",
+    "diagram": "transformer_attn",
+    "highlight": [
+      "K"
+    ]
+  },
+  "76": {
+    "text": "Project into value vectors and reshape into heads. Values carry the actual content that will be retrieved and blended by the attention weights.",
+    "hash": "7fcca8ac",
+    "diagram": "transformer_attn",
+    "highlight": [
+      "V"
+    ]
+  },
+  "79": {
+    "text": "Scaled dot-product attention, one matrix multiply computes all attention scores. Same formula as lab 01's inner loop, fully vectorized.",
+    "hash": "308b188d",
+    "diagram": "transformer_attn",
+    "highlight": [
+      "scores"
+    ]
+  },
+  "80": {
+    "text": "Causal mask: upper triangle of True values. Positions can only attend to earlier positions.",
+    "hash": "14eeec63"
+  },
+  "81": {
+    "text": "Fill future positions with -inf so softmax gives them zero weight.",
+    "hash": "a2e76efa"
+  },
+  "82": {
+    "text": "Softmax over the key dimension, each query gets a probability distribution over which keys to attend to.",
+    "hash": "62dc999a",
+    "diagram": "transformer_attn",
+    "highlight": [
+      "softmax"
+    ]
+  },
+  "84": {
+    "text": "Weighted value sum, transpose heads back, reshape to (B, T, C). The attention mechanism in three operations.",
+    "hash": "a1aef68f",
+    "diagram": "transformer_attn",
+    "highlight": [
+      "attn_out"
+    ]
+  },
+  "85": {
+    "text": "Output projection combines information from all heads.",
+    "hash": "36f2db67",
+    "diagram": "transformer_out",
+    "highlight": [
+      "wo"
+    ]
+  },
+  "88": {
+    "text": "MLP block, the \"thinking\" part of each transformer layer.",
+    "hash": "3ad666a1"
+  },
+  "91": {
+    "text": "Expand to 4x dimension: the wider hidden layer provides capacity for more complex transformations.",
+    "hash": "8e9f0642"
+  },
+  "92": {
+    "text": "Contract back to embedding dimension.",
+    "hash": "62c4768b"
+  },
+  "94": {
+    "text": "Forward: expand, activate, contract. One line replaces lab 01's three-step MLP.",
+    "hash": "a87869a2"
+  },
+  "95": {
+    "text": "ReLU + two linear layers. The entire MLP in a single expression.",
+    "hash": "8aa6bebb",
+    "diagram": "transformer_mlp",
+    "highlight": [
+      "fc1",
+      "relu",
+      "fc2"
+    ]
+  },
+  "98": {
+    "text": "A transformer block combines attention and MLP with residual connections and normalization.",
+    "hash": "4bcc8ea8"
+  },
+  "101": {
+    "text": "Normalize the input before the attention sub-layer. Pre-norm architecture stabilizes training by keeping activations on a consistent scale.",
+    "hash": "e92b587d"
+  },
+  "102": {
+    "text": "The self-attention sub-layer that lets each position gather information from all previous positions in the sequence.",
+    "hash": "95b016d9"
+  },
+  "103": {
+    "text": "Normalize before the feed-forward network. Same stabilizing role as the pre-attention norm, applied before a different transformation.",
+    "hash": "f58a7657"
+  },
+  "104": {
+    "text": "The position-wise feed-forward network that independently transforms each token's representation after attention has mixed information across positions.",
+    "hash": "17fdd551"
+  },
+  "106": {
+    "text": "The famous two-line transformer block: normalize-attend-add, normalize-MLP-add.",
+    "hash": "a87869a2"
+  },
+  "107": {
+    "text": "Attention with residual connection. Same as lab 01's manual <code>x = [a + b for a, b in zip(x, x_residual)]</code>, but expressed as clean addition.",
+    "hash": "5133b743",
+    "diagram": "transformer_out",
+    "highlight": [
+      "res1"
+    ]
+  },
+  "108": {
+    "text": "MLP with residual connection. The entire block is two residual sub-layers.",
+    "hash": "50e2183f",
+    "diagram": "transformer_mlp",
+    "highlight": [
+      "fc2"
+    ]
+  },
+  "112": {
+    "text": "The complete GPT model. Four components: embeddings, normalization, transformer layers, and the output head.",
+    "hash": "e94c5dc2",
+    "diagram": "transformer_forward",
+    "highlight": [
+      "wte",
+      "wpe",
+      "blocks",
+      "lm_head"
+    ]
+  },
+  "115": {
+    "text": "<code>nn.Embedding</code> is a lookup table, same as indexing into lab 01's <code>wte</code> list, but with built-in gradient tracking.",
+    "hash": "2a2b79bb"
+  },
+  "116": {
+    "text": "Position embeddings, learned, not sinusoidal. Each position gets its own vector.",
+    "hash": "5338449e"
+  },
+  "117": {
+    "text": "Initial RMSNorm before the transformer layers.",
+    "hash": "5caa073e"
+  },
+  "118": {
+    "text": "<code>ModuleList</code> registers all layers so PyTorch can find their parameters for optimization.",
+    "hash": "d10311df"
+  },
+  "119": {
+    "text": "Output head: project from embedding space to vocabulary logits. No bias, matching our design.",
+    "hash": "1774314d"
+  },
+  "120": {
+    "text": "Walk through every sub-module in the model and apply our custom N(0, 0.08) initialization. This ensures consistent starting conditions across all labs.",
+    "hash": "e4941829"
+  },
+  "123": {
+    "text": "Static method, doesn't need <code>self</code> because initialization doesn't depend on the model instance.",
+    "hash": "2e476132"
+  },
+  "124": {
+    "text": "Only initialize Linear and Embedding layers, skip RMSNorm (it has no weights).",
+    "hash": "e2ce6cde"
+  },
+  "125": {
+    "text": "N(0, 0.08) initialization, identical to lab 01's <code>random.gauss(0, 0.08)</code>.",
+    "hash": "9677d3fd"
+  },
+  "127": {
+    "text": "The forward pass. Compare to lab 01: this is the same algorithm, but embedding lookups, matrix multiplies, normalization, and attention are all handled by PyTorch layers.",
+    "hash": "1bc7099c",
+    "diagram": "transformer_forward",
+    "highlight": {
+      "nodes": [
+        "add_emb",
+        "norm_in",
+        "blocks",
+        "norm_out",
+        "lm_head",
+        "logits"
+      ],
+      "links": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ]
+    }
+  },
+  "128": {
+    "text": "Unpack batch and sequence dimensions.",
+    "hash": "47cad82b"
+  },
+  "129": {
+    "text": "Look up each input token's learned embedding vector from the table. This converts discrete token IDs into continuous representations the model can process.",
+    "hash": "8d137e9c",
+    "diagram": "transformer_embed",
+    "highlight": [
+      "wte"
+    ]
+  },
+  "130": {
+    "text": "Position embedding: <code>arange(T)</code> generates [0, 1, ..., T-1] for position IDs.",
+    "hash": "2b319b15",
+    "diagram": "transformer_embed",
+    "highlight": [
+      "wpe"
+    ]
+  },
+  "131": {
+    "text": "Fuse embeddings, normalize, and enter the transformer.",
+    "hash": "b88a95ea",
+    "diagram": "transformer_embed",
+    "highlight": [
+      "norm_in"
+    ]
+  },
+  "132": {
+    "text": "Pass the representation through each transformer layer in sequence. With one layer this loops once, but the code scales to any depth.",
+    "hash": "359aba32"
+  },
+  "133": {
+    "text": "Each layer applies attention + MLP with residual connections.",
+    "hash": "41f1e6d2",
+    "diagram": "transformer_block",
+    "highlight": {
+      "nodes": [
+        "attn",
+        "res1",
+        "mlp",
+        "res2"
+      ],
+      "links": [
+        1,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ]
+    }
+  },
+  "134": {
+    "text": "Project to vocabulary logits, the model's prediction for each position.",
+    "hash": "9ef9adcf",
+    "diagram": "transformer_logits",
+    "highlight": [
+      "lm_head",
+      "logits"
+    ]
+  },
+  "140": {
+    "text": "CPU training. For this tiny model, CPU is fine.",
+    "hash": "b39e14b0"
+  },
+  "141": {
+    "text": "Instantiate and move to device. <code>.to(device)</code> would matter for GPU; here it's a no-op.",
+    "hash": "40b7fcd9"
+  },
+  "142": {
+    "text": "Count parameters, should match labs 01-02.",
+    "hash": "ea4a5d11"
+  },
+  "144": {
+    "text": "PyTorch's built-in Adam optimizer. One line replaces the manual Adam implementation from labs 01-02. Same hyperparameters: lr=0.01, betas=(0.85, 0.99).",
+    "hash": "92d21e78"
+  },
+  "145": {
+    "text": "1000 training steps, same as before.",
+    "hash": "f105aa30"
+  },
+  "147": {
+    "text": "Iterate over training steps, processing one name per step to update the model weights.",
+    "hash": "53f56939"
+  },
+  "148": {
+    "text": "Cycle through the dataset with modular indexing. After processing all names, we loop back for another pass.",
+    "hash": "47ec0e2c"
+  },
+  "149": {
+    "text": "Tokenize: BOS + char IDs + BOS.",
+    "hash": "ae86abd0"
+  },
+  "150": {
+    "text": "Clip to the maximum context window. Most names fit easily, but this prevents overflow on unusually long entries.",
+    "hash": "3d9da8cd"
+  },
+  "152": {
+    "text": "Create input tensor with batch dimension. The <code>[...]</code> wrapping adds the batch dimension, PyTorch always expects (B, T) shape.",
+    "hash": "fa82f770"
+  },
+  "153": {
+    "text": "Target tensor: same tokens shifted by one position.",
+    "hash": "b5390e5c"
+  },
+  "155": {
+    "text": "Forward pass. All gradient tracking happens automatically, PyTorch builds the computation graph behind the scenes.",
+    "hash": "4064f9c4"
+  },
+  "156": {
+    "text": "<code>cross_entropy</code> combines softmax + negative log likelihood in one numerically stable operation. Replaces lab 01's manual softmax + log + negation.",
+    "hash": "4f1dd754"
+  },
+  "158": {
+    "text": "Zero gradients from previous step. Same as lab 01's <code>p.grad = 0</code>, but for all parameters at once.",
+    "hash": "fbede2b3"
+  },
+  "159": {
+    "text": "THE magic line. <code>loss.backward()</code> computes all gradients automatically. This one call replaces lab 01's entire <code>Value.backward()</code> engine AND lab 02's 80+ lines of hand-derived gradients.",
+    "hash": "227fe80d"
+  },
+  "160": {
+    "text": "Linear learning rate decay, same schedule as previous labs.",
+    "hash": "60602e3a"
+  },
+  "161": {
+    "text": "PyTorch groups parameters; we update the learning rate for all groups.",
+    "hash": "9f6d3592"
+  },
+  "162": {
+    "text": "Write the decayed learning rate into the optimizer. Unlike labs 01-02 where we computed lr manually each step, here we just update one config value.",
+    "hash": "3030870a"
+  },
+  "163": {
+    "text": "Apply the Adam update. The optimizer reads the gradients computed by <code>backward()</code> and updates all parameters.",
+    "hash": "d9e59d7e"
+  },
+  "165": {
+    "text": "Print the loss periodically so we can monitor whether the model is learning.",
+    "hash": "cf37956f"
+  },
+  "166": {
+    "text": "<code>.item()</code> extracts the Python float from a 0-dim tensor, needed for printing.",
+    "hash": "63e6c4e6"
+  },
+  "171": {
+    "text": "Temperature 0.5 makes generation more conservative: the model favors its highest-confidence predictions, producing more typical-sounding names.",
+    "hash": "7eca5b76"
+  },
+  "173": {
+    "text": "Switch to eval mode, disables dropout (if any). Good practice, though our model doesn't use dropout.",
+    "hash": "45bf010c"
+  },
+  "174": {
+    "text": "<code>torch.no_grad()</code> disables gradient tracking during inference, saves memory and computation. We're only generating, not training.",
+    "hash": "d4f61231"
+  },
+  "175": {
+    "text": "Generate 20 brand-new names by sampling from the model's learned distribution.",
+    "hash": "64d836c5"
+  },
+  "176": {
+    "text": "Begin each generated name with the beginning-of-sequence token as the initial prompt.",
+    "hash": "5c52ddc4"
+  },
+  "177": {
+    "text": "Generate up to <code>block_size</code> characters.",
+    "hash": "ab05dc73"
+  },
+  "178": {
+    "text": "Feed the generated sequence (up to context length) as a batch of 1.",
+    "hash": "ce311cc5"
+  },
+  "179": {
+    "text": "Forward pass, no gradient tracking needed.",
+    "hash": "7d28f274"
+  },
+  "180": {
+    "text": "Take the last position's logits, apply temperature.",
+    "hash": "e1a1328f"
+  },
+  "181": {
+    "text": "Convert the temperature-scaled logits into a proper probability distribution that sums to one, ready for sampling.",
+    "hash": "93ed4206"
+  },
+  "182": {
+    "text": "<code>multinomial</code> samples one token from the distribution. PyTorch's equivalent of lab 01's <code>random.choices</code>.",
+    "hash": "5b83becd"
+  },
+  "183": {
+    "text": "When the model predicts BOS, it signals the name is complete, so we stop generating.",
+    "hash": "41a35c11"
+  },
+  "185": {
+    "text": "Append the newly sampled token to the growing sequence so it becomes part of the context for predicting the next character.",
+    "hash": "a1ca669a"
+  },
+  "186": {
+    "text": "Convert token IDs to characters, skipping the initial BOS.",
+    "hash": "b4368128"
+  },
+  "187": {
+    "text": "Print the finished generated name. These are entirely novel names the model invented from patterns it learned during training.",
+    "hash": "f9d6f741"
+  }
+}

@@ -1,0 +1,10 @@
+graph TD
+    readq[Read one Q row]
+    loop[Stream causal K,V rows]
+    score[Dot product score]
+    update[Update running max<br/>and normalization]
+    accum[Rescale + accumulate<br/>output row]
+    write[Write final normalized row]
+    readq --> loop --> score --> update --> accum
+    accum --> loop
+    accum --> write
